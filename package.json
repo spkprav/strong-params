@@ -1,7 +1,7 @@
 {
   "name": "strong-params",
-  "version": "0.0.0",
-  "description": "Rails-style implementation of strong parameters",
+  "version": "0.6.0",
+  "description": "Rails-style strong parameters for javascript projects. (e.g. Express, Koa)",
   "main": "index.js",
   "scripts": {
     "test": "standard && node --harmony ./node_modules/jasmine-node/bin/jasmine-node ./spec --verbose"
