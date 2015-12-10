@@ -11,7 +11,7 @@ describe('expressMiddleware', function () {
     this.url = 'http://localhost:' + this.port
     this.app = express()
     this.app.use(bodyParser.json())
-    this.app.use(bodyParser.urlencoded())
+    this.app.use(bodyParser.urlencoded({ extended: true }))
     this.app.use(params.expressMiddleware())
   })
 
