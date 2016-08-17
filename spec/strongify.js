@@ -2,7 +2,7 @@
 var should = require('should')
 var sinon = require('sinon')
 
-var Parameters = require('..').strongify
+var Parameters = require('..').Parameters
 var PRIMITIVE_TYPES = [Boolean, Number, String, function Null () {
   this.valueOf = function () { return null }
 }]
