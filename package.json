@@ -4,7 +4,7 @@
   "description": "Rails-style strong parameters for javascript projects. (e.g. Express, Koa)",
   "main": "index.js",
   "scripts": {
-    "test": "standard && mocha --recursive ./spec"
+    "test": "standard && mocha --harmony --recursive ./spec"
   },
   "engines": {
     "node": ">= 0.11.9"
@@ -60,6 +60,7 @@
     "standard": "^3.0.0"
   },
   "dependencies": {
+    "es6-object-assign": "^1.0.2",
     "lodash": "^3.0.0"
   }
 }
