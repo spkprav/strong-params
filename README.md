@@ -109,6 +109,18 @@ params.require('contacts').permit('type', 'value').value()
 // -> [{ type: 'e-mail', value: 'bob@random.rnd' }, { type: 'mobile', value: '+123987456' }]
 ```
 
+### Errors
+
+```js
+// ParameterMissingError
+try {
+  params.require('missingKey')
+} catch(err) {
+  err instanceof ParameterMissingError // -> true
+  err instanceof Error // -> true
+}
+```
+
 Look [Rails Strong Parameters specification](http://edgeguides.rubyonrails.org/action_controller_overview.html#strong-parameters) for more information.
 
 ## Contributing
