@@ -1,6 +1,6 @@
 {
   "name": "strong-params",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "Rails-style strong parameters for javascript projects. (e.g. Express, Koa)",
   "main": "index.js",
   "scripts": {
