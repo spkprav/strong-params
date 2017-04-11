@@ -3,6 +3,7 @@ var should = require('should')
 var sinon = require('sinon')
 
 var Parameters = require('..').Parameters
+var ParameterMissingError = require('..').ParameterMissingError
 var PRIMITIVE_TYPES = [Boolean, Number, String, function Null () {
   this.valueOf = function () { return null }
 }]
@@ -107,7 +108,27 @@ describe('Parameters', function () {
 
   })
 
-  describe('instance methods', function () {})
+  describe('instance methods', function () {
+    describe('require', function () {
+      var params
+      beforeEach(function () {
+        params = new Parameters({ requiredKey: {} })
+      })
+      describe('when required key passed', function () {
+        it('should return instance of parameters', function () {
+          params.require('requiredKey').should.be.a.instanceOf(Parameters)
+        })
+      })
+      describe('when required key not passed', function () {
+        it('should throw instance of ParameterMissingError with error message', function () {
+          var requireFunction = function () {
+            params.require('missingKey')
+          }
+          should.throws(requireFunction, ParameterMissingError, 'param `missingKey` required')
+        })
+      })
+    })
+  })
 
   describe('operations', function () {
 
