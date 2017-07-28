@@ -58,7 +58,7 @@
     "request": "^2.40.0",
     "should": "^11.1.0",
     "sinon": "^1.17.5",
-    "standard": "^3.0.0"
+    "standard": "^10.0.2"
   },
   "dependencies": {
     "es6-object-assign": "^1.0.2",

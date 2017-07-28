@@ -30,7 +30,6 @@ describe('koaMiddleware', function () {
   })
 
   describe('req.parameters.all()', function () {
-
     it('should return `all` params', function (done) {
       ctx.app.use(function (ctx, next) {
         ctx.body = ctx.parameters.all()
@@ -42,11 +41,9 @@ describe('koaMiddleware', function () {
         done(err)
       })
     })
-
   })
 
   describe('req.parameters.permit()', function () {
-
     it('should return `permit` selected params', function (done) {
       ctx.app.use(function (ctx, next) {
         ctx.body = ctx.parameters.permit('p1', 'a2').value()
@@ -58,11 +55,9 @@ describe('koaMiddleware', function () {
         done(err)
       })
     })
-
   })
 
   describe('req.parameters.require()', function () {
-
     it('should return a `params` object of the required key', function (done) {
       ctx.app.use(function (ctx, next) {
         ctx.body = ctx.parameters.require('p1').all()
@@ -95,7 +90,5 @@ describe('koaMiddleware', function () {
         done(err)
       })
     })
-
   })
-
 })
