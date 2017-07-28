@@ -15,7 +15,7 @@ describe('koaMiddleware', function () {
     ctx = {}
     ctx.port = 3001
     ctx.url = 'http://localhost:' + ctx.port
-    ctx.app = koa()
+    ctx.app = new koa() // eslint-disable-line new-cap
     qs(ctx.app)
     ctx.app.use(bodyparser())
     ctx.app.use(params.koaMiddleware())
@@ -28,8 +28,8 @@ describe('koaMiddleware', function () {
   describe('req.params.all()', function () {
 
     it('should return `all` params', function (done) {
-      ctx.app.use(function *() {
-        this.body = this.params.all()
+      ctx.app.use(function (ctx, next) {
+        ctx.body = ctx.params.all()
       })
       ctx.server = ctx.app.listen(ctx.port)
 
@@ -44,8 +44,8 @@ describe('koaMiddleware', function () {
   describe('req.params.permit()', function () {
 
     it('should return `permit` selected params', function (done) {
-      ctx.app.use(function *() {
-        this.body = this.params.permit('p1', 'a2').value()
+      ctx.app.use(function (ctx, next) {
+        ctx.body = ctx.params.permit('p1', 'a2').value()
       })
       ctx.server = ctx.app.listen(ctx.port)
 
@@ -60,8 +60,8 @@ describe('koaMiddleware', function () {
   describe('req.params.require()', function () {
 
     it('should return a `params` object of the required key', function (done) {
-      ctx.app.use(function *() {
-        this.body = this.params.require('p1').all()
+      ctx.app.use(function (ctx, next) {
+        ctx.body = ctx.params.require('p1').all()
       })
       ctx.server = ctx.app.listen(ctx.port)
 
@@ -72,16 +72,16 @@ describe('koaMiddleware', function () {
     })
 
     it('should throw an exception if the required key does not exist', function (done) {
-      ctx.app.use(function * (next) {
+      ctx.app.use(async function (ctx, next) {
         try {
-          yield* next
+          await next()
         } catch (err) {
-          this.response.status = 500
-          this.response.body = err.message
+          ctx.response.status = 500
+          ctx.response.body = err.message
         }
       })
-      ctx.app.use(function *() {
-        this.body = this.params.require('xx').all()
+      ctx.app.use(function (ctx, next) {
+        ctx.body = ctx.params.require('xx').all()
       })
       ctx.server = ctx.app.listen(ctx.port)
 
