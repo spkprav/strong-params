@@ -307,6 +307,15 @@ describe('Parameters', function () {
           }
         })
       })
+
+      it('should handle scalar input for object filter', function () {
+        // Prepare
+        var filters = [{'primString': []}]
+        // Test
+        var result = params.permit(filters).value()
+        // Verify
+        result.should.deepEqual({})
+      })
     })
   })
 })
