@@ -18,6 +18,10 @@ describe('koaMiddleware', function () {
     ctx.app = new koa() // eslint-disable-line new-cap
     qs(ctx.app)
     ctx.app.use(bodyparser())
+    ctx.app.use(function (ctx, next) {
+      ctx.params = { id: 'id' }
+      return next()
+    })
     ctx.app.use(params.koaMiddleware())
   })
 
@@ -25,27 +29,27 @@ describe('koaMiddleware', function () {
     ctx.server.close()
   })
 
-  describe('req.params.all()', function () {
+  describe('req.parameters.all()', function () {
 
     it('should return `all` params', function (done) {
       ctx.app.use(function (ctx, next) {
-        ctx.body = ctx.params.all()
+        ctx.body = ctx.parameters.all()
       })
       ctx.server = ctx.app.listen(ctx.port)
 
       request.post({ url: ctx.url + '/?p1=1&p2=2', form: { a1: 1, a2: 2 } }, function (err, res, body) {
-        should(JSON.parse(body)).eql({ p1: '1', p2: '2', a1: '1', a2: '2' })
+        should(JSON.parse(body)).eql({ p1: '1', p2: '2', a1: '1', a2: '2', id: 'id' })
         done(err)
       })
     })
 
   })
 
-  describe('req.params.permit()', function () {
+  describe('req.parameters.permit()', function () {
 
     it('should return `permit` selected params', function (done) {
       ctx.app.use(function (ctx, next) {
-        ctx.body = ctx.params.permit('p1', 'a2').value()
+        ctx.body = ctx.parameters.permit('p1', 'a2').value()
       })
       ctx.server = ctx.app.listen(ctx.port)
 
@@ -57,11 +61,11 @@ describe('koaMiddleware', function () {
 
   })
 
-  describe('req.params.require()', function () {
+  describe('req.parameters.require()', function () {
 
     it('should return a `params` object of the required key', function (done) {
       ctx.app.use(function (ctx, next) {
-        ctx.body = ctx.params.require('p1').all()
+        ctx.body = ctx.parameters.require('p1').all()
       })
       ctx.server = ctx.app.listen(ctx.port)
 
@@ -81,7 +85,7 @@ describe('koaMiddleware', function () {
         }
       })
       ctx.app.use(function (ctx, next) {
-        ctx.body = ctx.params.require('xx').all()
+        ctx.body = ctx.parameters.require('xx').all()
       })
       ctx.server = ctx.app.listen(ctx.port)
 
