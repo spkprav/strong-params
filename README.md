@@ -2,7 +2,7 @@
 
 ![Build Status](https://travis-ci.org/ssowonny/strong-params.svg?branch=master)&nbsp;[![NPM version](https://badge.fury.io/js/strong-params.svg)](http://badge.fury.io/js/strong-params)
 
-Rails-style implementation of strong parameters. It supports [Express](http://expressjs.com/), [Koa](https://github.com/koajs/koa) and also can be used as standalone. The middleware adds the `parameters` object to the [Express request](http://expressjs.com/4x/api.html#req) (or `this.params` for [Koa context](http://koajs.com/#context)) which returns an object, built from `query string`, `request body` and `route params` data. The returned object has some useful methods allows for data `requiring` and `filtering`.
+Rails-style implementation of strong parameters. It supports [Express](http://expressjs.com/), [Koa](https://github.com/koajs/koa) and also can be used as standalone. The middleware adds the `parameters` object to the [Express request](http://expressjs.com/4x/api.html#req) (or `ctx.parameters` for [Koa context](http://koajs.com/#context)) which returns an object, built from `query string`, `request body` and `route params` data. The returned object has some useful methods allows for data `requiring` and `filtering`.
 
 ## Notice
 
@@ -31,7 +31,7 @@ app.use(params.expressMiddleware())
 ```js
 var koa = require('koa')
 var params = require('strong-params')
-var app = koa()
+var app = new koa()
 app.use(params.koaMiddleware())
 ```
 
@@ -50,8 +50,8 @@ app.use(function (req, res, next) {
 ##### Koa
 
 ```js
-app.use(function *() {
-  var params = this.params
+app.use(function (ctx, next) {
+  var params = ctx.parameters
 })
 ```
 

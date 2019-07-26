@@ -48,11 +48,9 @@ describe('expressMiddleware', function () {
         done(err)
       })
     })
-
   })
 
   describe('req.parameters.require()', function () {
-
     it('should return a `params` object of the required key', function (done) {
       ctx.app.use(function (req, res, next) {
         res.json(req.parameters.require('p1').all())

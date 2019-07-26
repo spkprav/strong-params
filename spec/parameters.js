@@ -9,9 +9,7 @@ var PRIMITIVE_TYPES = [Boolean, Number, String, function Null () {
 }]
 
 describe('Parameters', function () {
-
   describe('class methods', function () {
-
     describe('_initValue', function () {
       PRIMITIVE_TYPES.forEach(function (Primitive) {
         it('should return primitive for ' + Primitive.name, function () {
@@ -105,7 +103,6 @@ describe('Parameters', function () {
         cb.callCount.should.equal(3)
       }))
     })
-
   })
 
   describe('instance methods', function () {
@@ -131,7 +128,6 @@ describe('Parameters', function () {
   })
 
   describe('operations', function () {
-
     describe('constructing', function () {})
     describe('cloning', function () {})
     describe('whitelisting', function () {
@@ -311,8 +307,15 @@ describe('Parameters', function () {
           }
         })
       })
+
+      it('should handle scalar input for object filter', function () {
+        // Prepare
+        var filters = [{'primString': []}]
+        // Test
+        var result = params.permit(filters).value()
+        // Verify
+        result.should.deepEqual({})
+      })
     })
-
   })
-
 })

@@ -15,9 +15,13 @@ describe('koaMiddleware', function () {
     ctx = {}
     ctx.port = 3001
     ctx.url = 'http://localhost:' + ctx.port
-    ctx.app = koa()
+    ctx.app = new koa() // eslint-disable-line new-cap
     qs(ctx.app)
     ctx.app.use(bodyparser())
+    ctx.app.use(function (ctx, next) {
+      ctx.params = { id: 'id' }
+      return next()
+    })
     ctx.app.use(params.koaMiddleware())
   })
 
@@ -25,27 +29,24 @@ describe('koaMiddleware', function () {
     ctx.server.close()
   })
 
-  describe('req.params.all()', function () {
-
+  describe('req.parameters.all()', function () {
     it('should return `all` params', function (done) {
-      ctx.app.use(function *() {
-        this.body = this.params.all()
+      ctx.app.use(function (ctx, next) {
+        ctx.body = ctx.parameters.all()
       })
       ctx.server = ctx.app.listen(ctx.port)
 
       request.post({ url: ctx.url + '/?p1=1&p2=2', form: { a1: 1, a2: 2 } }, function (err, res, body) {
-        should(JSON.parse(body)).eql({ p1: '1', p2: '2', a1: '1', a2: '2' })
+        should(JSON.parse(body)).eql({ p1: '1', p2: '2', a1: '1', a2: '2', id: 'id' })
         done(err)
       })
     })
-
   })
 
-  describe('req.params.permit()', function () {
-
+  describe('req.parameters.permit()', function () {
     it('should return `permit` selected params', function (done) {
-      ctx.app.use(function *() {
-        this.body = this.params.permit('p1', 'a2').value()
+      ctx.app.use(function (ctx, next) {
+        ctx.body = ctx.parameters.permit('p1', 'a2').value()
       })
       ctx.server = ctx.app.listen(ctx.port)
 
@@ -54,14 +55,12 @@ describe('koaMiddleware', function () {
         done(err)
       })
     })
-
   })
 
-  describe('req.params.require()', function () {
-
+  describe('req.parameters.require()', function () {
     it('should return a `params` object of the required key', function (done) {
-      ctx.app.use(function *() {
-        this.body = this.params.require('p1').all()
+      ctx.app.use(function (ctx, next) {
+        ctx.body = ctx.parameters.require('p1').all()
       })
       ctx.server = ctx.app.listen(ctx.port)
 
@@ -72,16 +71,16 @@ describe('koaMiddleware', function () {
     })
 
     it('should throw an exception if the required key does not exist', function (done) {
-      ctx.app.use(function * (next) {
+      ctx.app.use(async function (ctx, next) {
         try {
-          yield* next
+          await next()
         } catch (err) {
-          this.response.status = 500
-          this.response.body = err.message
+          ctx.response.status = 500
+          ctx.response.body = err.message
         }
       })
-      ctx.app.use(function *() {
-        this.body = this.params.require('xx').all()
+      ctx.app.use(function (ctx, next) {
+        ctx.body = ctx.parameters.require('xx').all()
       })
       ctx.server = ctx.app.listen(ctx.port)
 
@@ -91,7 +90,5 @@ describe('koaMiddleware', function () {
         done(err)
       })
     })
-
   })
-
 })

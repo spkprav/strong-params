@@ -1,13 +1,13 @@
 {
   "name": "strong-params",
-  "version": "0.7.1",
+  "version": "1.0.0",
   "description": "Rails-style strong parameters for javascript projects. (e.g. Express, Koa)",
   "main": "index.js",
   "scripts": {
-    "test": "standard && mocha --harmony --recursive ./spec"
+    "test": "standard && mocha --recursive ./spec"
   },
   "engines": {
-    "node": ">= 0.11.9"
+    "node": "8"
   },
   "repository": {
     "type": "git",
@@ -40,6 +40,7 @@
   ],
   "author": "ssowonny",
   "contributors": [
+    "simonratner",
     "vellotis"
   ],
   "license": "MIT",
@@ -48,19 +49,19 @@
   },
   "homepage": "https://github.com/ssowonny/strong-params",
   "devDependencies": {
-    "body-parser": "~1.10.2",
-    "express": "~4.11.1",
-    "koa": "^0.10.0",
-    "koa-bodyparser": "^1.0.1",
-    "koa-qs": "^1.0.0",
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "koa": "^2.3.0",
+    "koa-bodyparser": "^4.2.0",
+    "koa-qs": "^2.0.0",
     "mocha": "^3.0.2",
     "request": "^2.40.0",
     "should": "^11.1.0",
     "sinon": "^1.17.5",
-    "standard": "^3.0.0"
+    "standard": "^10.0.2"
   },
   "dependencies": {
     "es6-object-assign": "^1.0.2",
-    "lodash": "^3.0.0"
+    "lodash": "^4.17.4"
   }
 }
