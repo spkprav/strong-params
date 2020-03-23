@@ -6,9 +6,6 @@
   "scripts": {
     "test": "standard && mocha --recursive ./spec"
   },
-  "engines": {
-    "node": "8"
-  },
   "repository": {
     "type": "git",
     "url": "git://github.com/ssowonny/strong-params.git"
